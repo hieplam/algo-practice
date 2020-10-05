@@ -8,24 +8,89 @@ namespace tree_level_sum
     {
         static void Main(string[] args)
         {
-            var root = new Node(1);
-            root.Left = new Node(2);
-            root.Right = new Node(3);
-            root.Left.Left = new Node(4);
-            root.Left.Right = new Node(5);
-            root.Right.Right = new Node(8);
-            root.Right.Right.Left = new Node(6);
-            root.Right.Right.Right = new Node(7);
-
+            var root = new Tree(1);
+            root.Left = new Tree(2);
+            root.Right = new Tree(3);
+            root.Left.Left = new Tree(4);
+            root.Left.Right = new Tree(5);
+            root.Right.Right = new Tree(8);
+            root.Right.Right.Left = new Tree(6);
+            root.Right.Right.Right = new Tree(7);
+            //Breath Frist Search
+            System.Console.WriteLine("================= Breath First Search on Tree ======================");
             System.Console.WriteLine($"Iterating Tree: {string.Join(',', BFS(root))}");
             System.Console.WriteLine($"Tree Level Sum: {string.Join(',', TreeLevelSum(root))}");
             System.Console.WriteLine($"Max Level Sum: {MaxLevelSum(root)}");
 
+
+            //Depth First Search
+            System.Console.WriteLine("================= Depth First Search on 2D Matrix ======================");
+            int[][] matrix = new int[5][]
+            {
+                new int[5] { 1, 1, 0, 0, 0 },
+                new int[5] { 0, 1, 1, 0, 0 },
+                new int[5] { 0, 0, 1, 0, 1 },
+                new int[5] { 1, 0, 0, 0, 1 },
+                new int[5] { 0, 1, 0, 1, 1 }
+            };
+            System.Console.WriteLine("Print 2D Matrix!!");
+            PrintMatrix(matrix);
+            int r = connectedCell(matrix);
+            //expect 5
+            System.Console.WriteLine($"Connected cell: {r}");
+        }
+        static void PrintMatrix(int[][] m)
+        {
+            for (int i = 0; i < m.Length; i++)
+            {
+                for (int j = 0; j < m[i].Length; j++)
+                {
+                    Console.Write($"{m[i][j]} ");
+                }
+                System.Console.WriteLine();
+            }
         }
 
-        static List<int> BFS(Node tree)
+        static int connectedCell(int[][] m)
         {
-            var q = new Queue<Node>();
+            var maxRegion = 0;
+            for (int r = 0; r < m.Length; r++)
+            {
+                for (int c = 0; c < m[r].Length; c++)
+                {
+                    if (m[r][c] == 0) continue;
+                    var region = getMaxRegion(m, r, c);
+                    if (region > maxRegion)
+                    {
+                        maxRegion = region;
+                    }
+                }
+            }
+            return maxRegion;
+        }
+        static int getMaxRegion(int[][] m, int r, int c)
+        {
+            if (r < 0 || c < 0 || r >= m.Length || c >= m[r].Length)
+            {
+                return 0;
+            }
+            if (m[r][c] == 0) return 0;
+
+            var size = 1;
+            m[r][c] = 0;//mark as visited.
+            for (int i = r - 1; i <= r + 1; i++)
+            {
+                for (int j = c - 1; j <= c + 1; j++)
+                {
+                    if (i == r && j == c) continue;
+                    size += getMaxRegion(m, i, j);
+                }
+            }
+            return size;
+        }
+        static List<int> BFS(Tree tree)
+        {
+            var q = new Queue<Tree>();
             q.Enqueue(tree);
             var result = new List<int>();
             while (q.Any())
@@ -40,15 +105,15 @@ namespace tree_level_sum
             return result;
         }
 
-        static List<int> TreeLevelSum(Node node)
+        static List<int> TreeLevelSum(Tree node)
         {
             var result = new List<int>();
-            var levelNodes = new List<Node>() { node };
+            var levelNodes = new List<Tree>() { node };
 
             while (levelNodes.Any())
             {
                 var sum = 0;
-                var childNodes = new List<Node>();
+                var childNodes = new List<Tree>();
                 foreach (var item in levelNodes)
                 {
                     sum += item.Value;
@@ -63,14 +128,15 @@ namespace tree_level_sum
             return result;
         }
 
-        static int MaxLevelSum(Node node){
+        static int MaxLevelSum(Tree node)
+        {
             var max = 0;
-            var levelNodes = new List<Node>() { node };
+            var levelNodes = new List<Tree>() { node };
 
             while (levelNodes.Any())
             {
                 var sum = 0;
-                var childNodes = new List<Node>();
+                var childNodes = new List<Tree>();
                 foreach (var item in levelNodes)
                 {
                     sum += item.Value;
@@ -86,18 +152,33 @@ namespace tree_level_sum
         }
     }
 
-    public class Node
+    public class Tree
     {
         public int Value { get; set; }
-        public Node Left { get; set; }
-        public Node Right { get; set; }
-        public Node(int value)
+        public Tree Left { get; set; }
+        public Tree Right { get; set; }
+        public Tree(int value)
         {
             Value = value;
             Left = null;
             Right = null;
         }
+    }
 
+    public class Node
+    {
+        public string Name { get; set; }
+        public List<Node> Child { get; set; }
+        public Node(string name = "")
+        {
+            Name = name;
+            Child = new List<Node>();
+        }
 
+        public Node AddChild(Node child)
+        {
+            Child.Add(child);
+            return this;
+        }
     }
 }
