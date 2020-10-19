@@ -1,4 +1,4 @@
-package codility
+package graph
 
 import "testing"
 
