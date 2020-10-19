@@ -1,2 +1,2 @@
 # algo-practice
-practice algo in c#
+practice algo in go
