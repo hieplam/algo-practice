@@ -8,6 +8,15 @@ namespace tree_level_sum
     {
         static void Main(string[] args)
         {
+            var node = new Node("A");
+            node.Child = new List<Node> { new Node("B"), new Node("C"), new Node("D") };
+            node.Child[0].Child = new List<Node> { new Node("E"), new Node("F") };
+            node.Child[0].Child[1].Child = new List<Node> { new Node("I"), new Node("J") };
+
+            node.Child[2].Child = new List<Node> { new Node("G"), new Node("H") };
+            node.Child[2].Child[0].Child = new List<Node> { new Node("K") };
+
+
             var root = new Tree(1);
             root.Left = new Tree(2);
             root.Right = new Tree(3);
@@ -17,14 +26,15 @@ namespace tree_level_sum
             root.Right.Right.Left = new Tree(6);
             root.Right.Right.Right = new Tree(7);
             //Breath Frist Search
-            System.Console.WriteLine("================= Breath First Search on Tree ======================");
-            System.Console.WriteLine($"Iterating Tree: {string.Join(',', BFS(root))}");
+            // System.Console.WriteLine("================= Breath First Search on Tree ======================");
+            // System.Console.WriteLine($"Iterating Tree: {string.Join(',', BFS(root))}");
             System.Console.WriteLine($"Tree Level Sum: {string.Join(',', TreeLevelSum(root))}");
-            System.Console.WriteLine($"Max Level Sum: {MaxLevelSum(root)}");
+            // System.Console.WriteLine($"Max Level Sum: {MaxLevelSum(root)}");
+            // System.Console.WriteLine($"Depth First Search: {string.Join(',', DFS(node))}");
 
 
             //Depth First Search
-            System.Console.WriteLine("================= Depth First Search on 2D Matrix ======================");
+            // System.Console.WriteLine("================= Depth First Search on 2D Matrix ======================");
             int[][] matrix = new int[5][]
             {
                 new int[5] { 1, 1, 0, 0, 0 },
@@ -33,12 +43,13 @@ namespace tree_level_sum
                 new int[5] { 1, 0, 0, 0, 1 },
                 new int[5] { 0, 1, 0, 1, 1 }
             };
-            System.Console.WriteLine("Print 2D Matrix!!");
-            PrintMatrix(matrix);
-            int r = connectedCell(matrix);
-            //expect 5
-            System.Console.WriteLine($"Connected cell: {r}");
+            // System.Console.WriteLine("Print 2D Matrix!!");
+            // PrintMatrix(matrix);
+            // int r = connectedCell(matrix);
+            // //expect 5
+            // System.Console.WriteLine($"Connected cell: {r}");
         }
+
         static void PrintMatrix(int[][] m)
         {
             for (int i = 0; i < m.Length; i++)
@@ -50,7 +61,6 @@ namespace tree_level_sum
                 System.Console.WriteLine();
             }
         }
-
         static int connectedCell(int[][] m)
         {
             var maxRegion = 0;
@@ -149,6 +159,25 @@ namespace tree_level_sum
             }
 
             return max;
+        }
+
+        static List<string> DFS(Node node)
+        {
+            var stack = new Stack<Node>();
+            var result = new List<string>();
+            stack.Push(node);
+            while (stack.Any())
+            {
+                var n = stack.Pop();
+                result.Add(n.Name);
+
+                for (int i = n.Child.Count - 1; i >= 0; i--)
+                {
+                    stack.Push(n.Child[i]);
+                }    
+            }
+
+            return result;
         }
     }
 
