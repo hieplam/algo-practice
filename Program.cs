@@ -28,7 +28,6 @@ namespace tree_level_sum
             //Breath Frist Search
             // System.Console.WriteLine("================= Breath First Search on Tree ======================");
             // System.Console.WriteLine($"Iterating Tree: {string.Join(',', BFS(root))}");
-            System.Console.WriteLine($"Tree Level Sum: {string.Join(',', TreeLevelSum(root))}");
             // System.Console.WriteLine($"Max Level Sum: {MaxLevelSum(root)}");
             // System.Console.WriteLine($"Depth First Search: {string.Join(',', DFS(node))}");
 
@@ -45,9 +44,6 @@ namespace tree_level_sum
             };
             // System.Console.WriteLine("Print 2D Matrix!!");
             // PrintMatrix(matrix);
-            // int r = connectedCell(matrix);
-            // //expect 5
-            // System.Console.WriteLine($"Connected cell: {r}");
         }
 
         static void PrintMatrix(int[][] m)
@@ -61,23 +57,7 @@ namespace tree_level_sum
                 System.Console.WriteLine();
             }
         }
-        static int connectedCell(int[][] m)
-        {
-            var maxRegion = 0;
-            for (int r = 0; r < m.Length; r++)
-            {
-                for (int c = 0; c < m[r].Length; c++)
-                {
-                    if (m[r][c] == 0) continue;
-                    var region = getMaxRegion(m, r, c);
-                    if (region > maxRegion)
-                    {
-                        maxRegion = region;
-                    }
-                }
-            }
-            return maxRegion;
-        }
+       
         static int getMaxRegion(int[][] m, int r, int c)
         {
             if (r < 0 || c < 0 || r >= m.Length || c >= m[r].Length)
@@ -110,29 +90,6 @@ namespace tree_level_sum
                 if (n.Right != null) q.Enqueue(n.Right);
 
                 result.Add(n.Value);
-            }
-
-            return result;
-        }
-
-        static List<int> TreeLevelSum(Tree node)
-        {
-            var result = new List<int>();
-            var levelNodes = new List<Tree>() { node };
-
-            while (levelNodes.Any())
-            {
-                var sum = 0;
-                var childNodes = new List<Tree>();
-                foreach (var item in levelNodes)
-                {
-                    sum += item.Value;
-                    if (item.Left != null) childNodes.Add(item.Left);
-                    if (item.Right != null) childNodes.Add(item.Right);
-                }
-
-                result.Add(sum);
-                levelNodes = childNodes;
             }
 
             return result;
