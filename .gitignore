@@ -9,3 +9,5 @@ bin/*
 obj/*
 # Local History for Visual Studio Code
 .history/
+
+*.out
