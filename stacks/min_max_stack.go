@@ -5,41 +5,41 @@ import (
 	"math"
 )
 
-type minMaxStack struct {
-	ele []int
+type MinMaxStack struct {
+	Ele []int
 }
 
-func new() *minMaxStack {
-	ele := minMaxStack{
-		ele: []int{},
+func New() *MinMaxStack {
+	ele := MinMaxStack{
+		Ele: []int{},
 	}
 	return &ele
 }
 
-func (s *minMaxStack) push(num int) {
-	s.ele = append(s.ele, num)
+func (s *MinMaxStack) Push(num int) {
+	s.Ele = append(s.Ele, num)
 }
 
-func (s *minMaxStack) pop() (int, error) {
-	if len(s.ele) == 0 {
-		return 0, errors.New("stack is empty, no value to pop")
+func (s *MinMaxStack) Pop() (int, error) {
+	if len(s.Ele) == 0 {
+		return 0, errors.New("stack is empty, no value to Pop")
 	}
-	r := s.ele[len(s.ele)-1]
-	s.ele = s.ele[:len(s.ele)-1]
+	r := s.Ele[len(s.Ele)-1]
+	s.Ele = s.Ele[:len(s.Ele)-1]
 
 	return r, nil
 }
 
-func (s *minMaxStack) peek() (int, error) {
-	if len(s.ele) == 0 {
-		return 0, errors.New("stack is empty, no value to peek")
+func (s *MinMaxStack) Peek() (int, error) {
+	if len(s.Ele) == 0 {
+		return 0, errors.New("stack is empty, no value to Peek")
 	}
-	return s.ele[len(s.ele)-1], nil
+	return s.Ele[len(s.Ele)-1], nil
 }
 
-func (s *minMaxStack) min() int {
+func (s *MinMaxStack) Min() int {
 	min := math.MaxInt32
-	for _, v := range s.ele {
+	for _, v := range s.Ele {
 		if min > v {
 			min = v
 		}
@@ -47,9 +47,9 @@ func (s *minMaxStack) min() int {
 	return min
 }
 
-func (s *minMaxStack) max() int {
+func (s *MinMaxStack) Max() int {
 	max := math.MinInt32
-	for _, v := range s.ele {
+	for _, v := range s.Ele {
 		if max < v {
 			max = v
 		}

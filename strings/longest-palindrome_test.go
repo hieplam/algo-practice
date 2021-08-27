@@ -1,6 +1,9 @@
-package strings
+package strings_test
 
-import "testing"
+import (
+	"algo_practice/strings"
+	"testing"
+)
 
 func TestLongestPalindromicSubstring(t *testing.T) {
 	testcases := []struct {
@@ -82,7 +85,7 @@ func TestLongestPalindromicSubstring(t *testing.T) {
 
 	for _, tc := range testcases {
 		t.Run(tc.name, func(t *testing.T) {
-			if actual := LongestPalindromicSubstring(tc.input); actual != tc.want {
+			if actual := strings.LongestPalindromicSubstring(tc.input); actual != tc.want {
 				t.Errorf("expected:%s - actual:%s", tc.want, actual)
 			}
 		})
