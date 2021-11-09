@@ -23,22 +23,3 @@ func PermMissingElem(A []int) int {
 	}
 	return sum - count
 }
-
-/*
-2 3 1 5 -> N=4
-miss 4
-
-(n*n + n) /2
-
-n-1
-
-1 2 3 			= 6 ->
-1 2 3 4 		= 10
-1 2 3 4 5 		= 15 	=> f = n + n-1 + n-2 + n-3 + n-4 + n-n
-						=> f = (n+1)n - f
-						=> 2f = n+1
-
-
-1 2 4 5			= 12 -> 3
-
-*/

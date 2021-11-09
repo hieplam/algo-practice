@@ -1,6 +1,7 @@
 package strings
 
 // LongestPalindromicSubstring accept string s and return longest palindrome substring
+// abcdefgfedcbazzzzzzzzzzzzzzzzzzzz
 func LongestPalindromicSubstring(s string) string {
 	r := ""
 	for i := range s {
